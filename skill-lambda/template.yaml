@@ -24,7 +24,8 @@ Resources:
       Events:
           AmberLookup:
             Type: AlexaSkill
-            SkillId: amzn1.ask.skill.e6742fb8-dc52-4c9c-b903-8b786354a9d8
+            Properties:
+              SkillId: amzn1.ask.skill.e6742fb8-dc52-4c9c-b903-8b786354a9d8
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

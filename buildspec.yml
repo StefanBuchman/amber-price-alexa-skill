@@ -6,7 +6,7 @@ phases:
   build:
     commands:
       - sam build --template-file skill-lambda/template.yaml
-      - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name amber-skill-stack --resolve-s3 --capabilities CAPABILITY_IAM
+      - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name amber-skill-stack --resolve-s3 --capabilities CAPABILITY_IAM --output-template-file packaged-template.yml
 artifacts:
   files:
-    - skill-lambda/packaged-template.yml
+    - packaged-template.yml

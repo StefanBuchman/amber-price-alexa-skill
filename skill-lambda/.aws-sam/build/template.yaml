@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'Amber Alexa Skill
+
+  Pull live pricing data from Amber for Alexa
+
+  '
+Globals:
+  Function:
+    Timeout: 30
+    Environment:
+      Variables:
+        AMBER_API_ENDPOINT: https://api.amberelectric.com.au/prices/listprices
+        POST_CODE: 3204
+Resources:
+  AmberFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: AmberFunction
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Events:
+        Amber:
+          Type: Api
+          Properties:
+            Path: /amber
+            Method: get
+Outputs:
+  AmberApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/amber/
+  AmberFunction:
+    Description: Hello World Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - AmberFunction
+      - Arn
+  AmberFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - AmberFunctionRole
+      - Arn

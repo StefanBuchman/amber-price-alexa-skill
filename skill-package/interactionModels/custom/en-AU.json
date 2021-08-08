@@ -1,0 +1,31 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "amber",
+      "intents": [
+        {
+          "name": "AMAZON.StopIntent"
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent"
+        },
+        {
+          "name": "AMAZON.HelpIntent"
+        },
+        {
+          "name": "AMAZON.CancelIntent"
+        },
+        {
+          "name": "CurrentPriceIntent",
+          "samples": [
+            "what's the current price",
+            "what is the price of electricity",
+            "electricity"
+          ]
+        }
+      ],
+      "types": []
+    },
+    "prompts": []
+  }
+}

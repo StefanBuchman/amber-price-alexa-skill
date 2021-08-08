@@ -1,0 +1,12 @@
+{
+  "askToolkitStatesVersion": "2020-04-15",
+  "profiles": {
+    "default": {
+      "skillId": "amzn1.ask.skill.e6742fb8-dc52-4c9c-b903-8b786354a9d8",
+      "skillMetadata": {
+        "eTag": "a1976b94b3a6d63ea95810e96ba1b203",
+        "lastDeployHash": "1Cqsq0eyT7dUk4LcP5wHLazf9LU="
+      }
+    }
+  }
+}

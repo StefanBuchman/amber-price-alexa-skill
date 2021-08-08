@@ -5,7 +5,7 @@ phases:
         python: 3.8
   build:
     commands:
-      - sam build
+      - sam build --template-file skill-lambda/template.yml
       - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
 artifacts:
   files:

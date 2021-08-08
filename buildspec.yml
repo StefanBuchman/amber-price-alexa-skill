@@ -9,4 +9,4 @@ phases:
       - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name amber-skill-stack --resolve-s3 --capabilities CAPABILITY_IAM
 artifacts:
   files:
-    - packaged-template.yml
+    - skill-lambda/packaged-template.yml

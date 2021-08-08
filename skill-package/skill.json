@@ -3,7 +3,7 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "uri": "arn:aws:lambda:ap-southeast-2:212220248561:function:testAlexa"
+          "uri": "arn:aws:lambda:ap-southeast-2:212220248561:function:amber-skill-stack-AmberFunction-QLUYRBhuRfSh"
         },
         "interfaces": [
           {

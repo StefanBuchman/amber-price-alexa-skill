@@ -25,6 +25,7 @@ const CurrentPriceIntentHandler = {
         const speakOutput = 'I can\'t do that yet, I want chocolate first.';
         return handlerInput.responseBuilder
             .speak(speakOutput)
+            .withwithSimpleCard("Title", "Content")
             .getResponse();
     }
 };

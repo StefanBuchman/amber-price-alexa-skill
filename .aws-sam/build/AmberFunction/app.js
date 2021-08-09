@@ -1,28 +1,7 @@
+// This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
+// Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
+// session persistence, api calls, and more.
 const Alexa = require('ask-sdk-core');
-const axios = require('axios');
-
-const AMBER_SCREEN = require('./apl_amberPrice.json');
-const AMBER_TOKEN = 'amberToken';
-
-let AMBER_API_ENDPOINT = process.env.AMBER_API_ENDPOINT;
-let AMBER_API_KEY = process.env.AMBER_API_KEY;
-let AMBER_SITE = process.env.AMBER_SITE;
-
-async function queryAmberAPI() {
-    
-    let config = {
-        headers: {
-          'Authorization': 'Bearer ' + AMBER_API_KEY
-        }
-      };
-      
-    const response = await axios.get(`${AMBER_API_ENDPOINT}/${AMBER_SITE}/prices/current`, config);
-    
-    let pricekWhFl = parseFloat(response.data[0].perKwh);
-    let pricekWh = Math.round(pricekWhFl);
-    
-    return pricekWh;
-}
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -42,67 +21,11 @@ const CurrentPriceIntentHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CurrentPriceIntent';
     },
-    async handle(handlerInput) {
-        const pricekWh = await queryAmberAPI();
-        
-        let speakOutput = `The current price of electricity is ${pricekWh} cents per kilowatt hour.`;
-        
-        let amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-green.png";
-        
-        if (pricekWh <= 25) {
-            speakOutput += " Now is a great time to run appliances."
-        } else if (pricekWh > 25 && pricekWh < 35) {
-            amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-orange.png"
-            speakOutput += " Only run appliances if you have to, right now."
-            
-        } else if (pricekWh >= 35) {
-            amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-red.png"
-            speakOutput += " Avoid running any appliances, time to conserve."
-        }
-        
-        if (Alexa.getSupportedInterfaces(handlerInput.requestEnvelope)['Alexa.Presentation.APL']){
-            
-            return handlerInput.responseBuilder
-                .speak(speakOutput)
-                .addDirective({
-                    type: 'Alexa.Presentation.APL.RenderDocument',
-                    // token: AMBER_TOKEN,
-                    document: AMBER_SCREEN,
-                    datasources: {
-                        "headlineTemplateData": {
-                            "type": "object",
-                            "objectId": "headlineSample",
-                            "properties": {
-                                "backgroundImage": {
-                                    "contentDescription": null,
-                                    "smallSourceUrl": null,
-                                    "largeSourceUrl": null,
-                                    "sources": [
-                                        {
-                                            "url": amberBg,
-                                            "size": "large"
-                                        }
-                                    ]
-                                },
-                                "textContent": {
-                                    "primaryText": {
-                                        "type": "PlainText",
-                                        "text": `Electricity is currently ${String(pricekWh)}¢/kWh`
-                                    }
-                                },
-                                "logoUrl": "",
-                                "hintText": "Try, \"Alexa, ask Amber when to run the dishwasher?\""
-                            }
-                        }
-                    },
-                })
-                .getResponse();
-            
-        } else {
-            return handlerInput.responseBuilder
-                .speak(speakOutput)
-                .getResponse();
-        }
+    handle(handlerInput) {
+        const speakOutput = 'I can\'t do that yet, I want chocolate first.';
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .getResponse();
     }
 };
 

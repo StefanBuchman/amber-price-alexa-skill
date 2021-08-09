@@ -11,8 +11,9 @@ Globals:
     Timeout: 30
     Environment:
       Variables:
-        AMBER_API_ENDPOINT: https://api.amberelectric.com.au/prices/listprices
-        POST_CODE: 3204
+        AMBER_API_ENDPOINT: https://api.amber.com.au/v1/sites
+        AMBER_API_KEY: <ENTER API KEY>
+        AMBER_SITE: <ENTER SITE ID>
 
 Resources:
   AmberFunction:

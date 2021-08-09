@@ -49,13 +49,13 @@ const CurrentPriceIntentHandler = {
         
         let amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-green.png";
         
-        if (pricekWh <= 25) {
+        if (pricekWh <= 22) {
             speakOutput += " Now is a great time to run appliances."
-        } else if (pricekWh > 25 && pricekWh < 35) {
+        } else if (pricekWh > 22 && pricekWh <= 30) {
             amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-orange.png"
             speakOutput += " Only run appliances if you have to, right now."
             
-        } else if (pricekWh >= 35) {
+        } else if (pricekWh > 30) {
             amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-red.png"
             speakOutput += " Avoid running any appliances, time to conserve."
         }

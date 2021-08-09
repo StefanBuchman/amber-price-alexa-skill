@@ -66,7 +66,6 @@ const CurrentPriceIntentHandler = {
                 .speak(speakOutput)
                 .addDirective({
                     type: 'Alexa.Presentation.APL.RenderDocument',
-                    // token: AMBER_TOKEN,
                     document: AMBER_SCREEN,
                     datasources: {
                         "headlineTemplateData": {

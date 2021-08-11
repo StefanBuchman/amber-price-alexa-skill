@@ -53,7 +53,7 @@ const CurrentPriceIntentHandler = {
             speakOutput += " Now is a great time to run appliances."
         } else if (pricekWh > 25 && pricekWh < 35) {
             amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-orange.png"
-            speakOutput += " Only run appliances if you have to, right now."
+            speakOutput += " Only run appliances if you have to right now."
             
         } else if (pricekWh >= 35) {
             amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-red.png"

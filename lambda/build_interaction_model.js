@@ -14,4 +14,9 @@ new ControlInteractionModelGenerator()
         "electricity"
     ]})
 
+    .addIntent({ name: 'DishwasherIntent', samples: [
+        "what's the best time to run the dishwasher",
+        "dishwasher"
+    ]})
+
     .buildAndWrite('../skill-package/interactionModels/custom/en-AU.json');

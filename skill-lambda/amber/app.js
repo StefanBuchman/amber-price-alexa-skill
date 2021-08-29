@@ -66,6 +66,8 @@ const CurrentPriceIntentHandler = {
         const futurekWh = priceResponse.futureAverage;
 
         let priceDelta = pricekWh - futurekWh;
+
+        console.log({currentPrice: pricekWh, futureAverage: futurekWh, priceDelta: priceDelta});
         
         let speakOutput = `The current price of electricity is ${pricekWh} cents per kilowatt hour.`;
         
@@ -89,6 +91,8 @@ const CurrentPriceIntentHandler = {
         } else {
             speakOutput += " Prices are steady for the next 3 hours."
         }
+
+        console.log(speakOutput);
         
         if (Alexa.getSupportedInterfaces(handlerInput.requestEnvelope)['Alexa.Presentation.APL']){
             

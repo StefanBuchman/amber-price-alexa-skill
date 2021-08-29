@@ -8,7 +8,7 @@ let AMBER_API_ENDPOINT = process.env.AMBER_API_ENDPOINT;
 let AMBER_API_KEY = process.env.AMBER_API_KEY;
 let AMBER_SITE = process.env.AMBER_SITE;
 
-async function queryAmberAPI() {
+async function getCurrentAmberPrice() {
     
     let config = {
         headers: {
@@ -16,12 +16,29 @@ async function queryAmberAPI() {
         }
       };
       
-    const response = await axios.get(`${AMBER_API_ENDPOINT}/${AMBER_SITE}/prices/current`, config);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const tomorrowDate = tomorrow.toLocaleDateString('en-AU');
     
-    let pricekWhFl = parseFloat(response.data[0].perKwh);
+    const response = await axios.get(`${AMBER_API_ENDPOINT}/${AMBER_SITE}/prices?resolution=30&endDate=${tomorrowDate}`, config);
+
+    var currentPriceRaw = response.data.filter(interval => interval.type === 'CurrentInterval');
+    let pricekWhFl = parseFloat(currentPriceRaw[0].perKwh);
     let pricekWh = Math.round(pricekWhFl);
+
+    var futurePricesRaw = response.data.filter(interval => interval.type === 'ForecastInterval');
+    let futureSum = 0;
+
+    for (let i = 0; i <= 5; i++) {
+        futureSum += futurePricesRaw[i].perKwh;
+    };
+
+    let futureAverageFl = futureSum/6;
+    let futurePriceAvg = Math.round(futureAverageFl);
     
-    return pricekWh;
+    return {currentPrice: pricekWh, futureAverage: futurePriceAvg};
 }
 
 const LaunchRequestHandler = {
@@ -43,7 +60,12 @@ const CurrentPriceIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CurrentPriceIntent';
     },
     async handle(handlerInput) {
-        const pricekWh = await queryAmberAPI();
+        const priceResponse = await getCurrentAmberPrice();
+
+        const pricekWh = priceResponse.currentPrice;
+        const futurekWh = priceResponse.futureAverage;
+
+        let priceDelta = pricekWh - futurekWh;
         
         let speakOutput = `The current price of electricity is ${pricekWh} cents per kilowatt hour.`;
         
@@ -58,6 +80,14 @@ const CurrentPriceIntentHandler = {
         } else if (pricekWh > 30) {
             amberBg = "https://alexa-skill-asset-repo.s3.ap-southeast-2.amazonaws.com/images/amber-red.png"
             speakOutput += " Avoid running any appliances, time to conserve."
+        }
+
+        if (priceDelta < -2) {
+            speakOutput += ` Prices are dropping by ${priceDelta} over the next 3 hours.`
+        } else if (priceDelta > 2) {
+            speakOutput += speakOutput += ` Prices are increasing by ${priceDelta} over the next 3 hours.`
+        } else {
+            speakOutput += " Prices are steady for the next 3 hours."
         }
         
         if (Alexa.getSupportedInterfaces(handlerInput.requestEnvelope)['Alexa.Presentation.APL']){

@@ -84,9 +84,9 @@ const CurrentPriceIntentHandler = {
             speakOutput += " Avoid running any appliances, time to conserve."
         }
 
-        if (priceDelta < -2) {
+        if (priceDelta > 2) {
             speakOutput += ` Prices are dropping by ${priceDelta} cents per kilowatt hour over the next 3 hours.`
-        } else if (priceDelta > 2) {
+        } else if (priceDelta < -2) {
             speakOutput += speakOutput += ` Prices are increasing by ${priceDelta} cents per kilowatt hour over the next 3 hours.`
         } else {
             speakOutput += " Prices are steady for the next 3 hours."

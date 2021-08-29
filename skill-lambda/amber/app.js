@@ -89,7 +89,7 @@ const CurrentPriceIntentHandler = {
         } else if (priceDelta > 2) {
             speakOutput += speakOutput += ` Prices are increasing by ${priceDelta} cents per kilowatt hour over the next 3 hours.`
         } else {
-            speakOutput += " Prices are steady for the next 3 hours."
+            speakOutput += " Prices are steady for the next 3 hours, no need to worry."
         }
 
         console.log(speakOutput);
